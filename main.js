@@ -15,12 +15,12 @@ app.on('ready', function() {
         icon: __dirname + '/ico/music_logo_01.png'
     })
     // ,frame: false})
-    // mainWindow.loadURL(`file://${__dirname}/app/index.html`)
+    mainWindow.loadURL(`file://${__dirname}/app/index.html`)
 
     //Comment this out when development is done
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 
-    mainWindow.setResizable(false)
+    mainWindow.setResizable(true)
 
     mainWindow.on('closed', function() {
         mainWindow = null
