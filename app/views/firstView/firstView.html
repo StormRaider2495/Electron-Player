@@ -1,0 +1,41 @@
+<!-- Top Info -->
+<div id="title">
+    <span id="track">{{trackName}}</span>
+    <div id="timer">0:00</div>
+    <div id="duration">{{timer}}</div>
+</div>
+
+<!-- Controls -->
+<div class="controlsOuter">
+    <div class="controlsInner">
+        <div id="loading"></div>
+        <div class="btn" id="playBtn" ng-click="playPause()" ng-show="!songPlaying" aria-label="Play"></div>
+        <div class="btn" id="pauseBtn" ng-click="playPause()" ng-show="songPlaying" aria-label="Pause"></div>
+        <div class="btn" id="prevBtn" ng-click="prevSound()" aria-label="Previous"></div>
+        <div class="btn" id="nextBtn" ng-click="nextSound()" aria-label="Next"></div>
+    </div>
+    <div class="btn" id="playlistBtn" ng-click="showPlaylist()" aria-label="Show Playlist"></div>
+    <div class="btn" id="playLoopBtn" ng-click="playLoop()" aria-label="Loop Play"></div>
+    <div class="btn" id="volumeBtn" ng-click="showVolume()"></div>
+    <!-- <div class="btn" id="loop" ng-click="loop()"></div> -->
+</div>
+
+<!-- Progress -->
+<div id="waveform" ng-show="songPlaying" ng-click="seekToTime($event)"></div>
+
+<div id="bar" ng-hide="songPlaying"></div>
+<div id="progress"></div>
+
+<!-- Playlist -->
+<div id="playlist" ng-show="playListVisible">
+    <div id="list">
+        <div class="list-song" ng-repeat="song in player.playlist" ng-click="playPlaylistSong($index)">{{song.name}}</div>
+    </div>
+</div>
+
+<!-- Volume -->
+<div id="volume" class="fadeout" ng-click="showVolume()">
+    <div id="barFull" class="bar"></div>
+    <div id="barEmpty" class="bar" ng-click="setVolume($event)"></div>
+    <div id="sliderBtn"></div>
+</div>
