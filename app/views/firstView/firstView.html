@@ -6,19 +6,20 @@
 </div>
 
 <!-- Controls -->
-<div class="controlsOuter">
-    <div class="controlsInner">
-        <div id="loading"></div>
-        <div class="btn" id="playBtn" ng-click="playPause()" ng-show="!songPlaying" aria-label="Play"></div>
-        <div class="btn" id="pauseBtn" ng-click="playPause()" ng-show="songPlaying" aria-label="Pause"></div>
-        <div class="btn" id="prevBtn" ng-click="prevSound()" aria-label="Previous"></div>
-        <div class="btn" id="nextBtn" ng-click="nextSound()" aria-label="Next"></div>
-    </div>
-    <div class="btn" id="playlistBtn" ng-click="showPlaylist()" aria-label="Show Playlist"></div>
-    <div class="btn" id="playLoopBtn" ng-click="playLoop()" aria-label="Loop Play"></div>
-    <div class="btn" id="volumeBtn" ng-click="showVolume()"></div>
-    <!-- <div class="btn" id="loop" ng-click="loop()"></div> -->
-</div>
+<ul class="controlsOuter">
+    <ul class="controlsInner">
+        <li id="loading"></li>
+        <li class="btn" id="playBtn" ng-click="playPause()" ng-show="!songPlaying" aria-label="Play"></li>
+        <li class="btn" id="pauseBtn" ng-click="playPause()" ng-show="songPlaying" aria-label="Pause"></li>
+        <li class="btn" id="prevBtn" ng-click="prevSound()" aria-label="Previous"></li>
+        <li class="btn" id="nextBtn" ng-click="nextSound()" aria-label="Next"></li>
+    </ul>
+    <li class="btn" id="playlistBtn" ng-click="showPlaylist()" aria-label="Show Playlist"></li>
+    <li class="btn" id="playLoopBtn" ng-click="playLoop()" aria-label="Loop Play"></li>
+    <li class="btn" id="volumeBtn" ng-click="showVolume()"></li>
+    <li class="btn" id="loop" ng-click="setLoop()" aria-label="Toggle Repeat" ng-class="{true:'repeat', false:'no-repeat'}[loop]"></li>
+    <li class="btn" id="shuffle" ng-click="playlistShuffle()" aria-label="Shuffle playlist" class="shuffleOn"></li>
+</ul>
 
 <!-- Progress -->
 <div id="waveform" ng-show="songPlaying" ng-click="seekToTime($event)"></div>

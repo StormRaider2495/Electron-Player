@@ -18,7 +18,7 @@ app.on('ready', function() {
     mainWindow.loadURL(`file://${__dirname}/app/index.html`)
 
     //Comment this out when development is done
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 
     mainWindow.setResizable(true)
 
@@ -103,7 +103,7 @@ function openFolderDialog() {
                 objToSend.path = filePath[0];
                 objToSend.files = arr;
                 mainWindow.webContents.send('modal-folder-content', objToSend);
-            })
+            });
         }
-    })
+    });
 }

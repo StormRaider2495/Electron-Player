@@ -1,0 +1,31 @@
+body {
+    background: #333;
+    color: white;
+    text-align: center;
+    font-family: sans;
+}
+
+h1 {
+    position: fixed;
+    top: 1em;
+    left: 30%;
+}
+
+.animationBarContainer {
+    display: flex;
+    position: relative;
+    height: 140px;
+    background-color: #d22d4e;
+}
+
+.animationBarContainer span {
+    /*background: red;*/
+    display: block;
+    margin: 0px;
+    width: 0.5px;
+    flex: auto;
+    justify-content: center;
+    position: relative;
+    bottom: 0;
+    background-color: #333;
+}
