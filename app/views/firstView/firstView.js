@@ -38,27 +38,31 @@ angular.module('Player.first', ['ngRoute'])
             }
 
             $scope.playPlaylistSong = function (index) {
-                $scope.player.skipTo(index);                
+                $scope.player.skipTo(index);
             }
 
             $scope.nextSound = function () {
                 $scope.player.skip('next');
                 $scope.songPlaying = true;
             }
+            
             $scope.prevSound = function () {
                 $scope.player.skip('prev');
                 $scope.songPlaying = true;
             }
 
             $scope.playPause = function () {
-                if ($scope.songPlaying) {
-                    $scope.songPlaying = false;
-                    $scope.player.pause();
+                if ($scope.player) {
+                    if ($scope.songPlaying) {
+                        $scope.songPlaying = false;
+                        $scope.player.pause();
+                    } else {
+                        $scope.songPlaying = true;
+                        $scope.player.play();
+                    }
                 } else {
-                    $scope.songPlaying = true;
-                    $scope.player.play();
+                    alert("Add files to play");
                 }
-
             }
 
             $scope.showVolume = function () {
@@ -299,8 +303,8 @@ angular.module('Player.first', ['ngRoute'])
                 },
 
                 shuffle: function () {
-                    var self = this;                    
-                    var playlist = $scope.shuffleArr(self.playlist,self.index);
+                    var self = this;
+                    var playlist = $scope.shuffleArr(self.playlist, self.index);
                     console.log(playlist);
                     self.playlist = playlist;
                 }
@@ -347,7 +351,7 @@ angular.module('Player.first', ['ngRoute'])
                 // $("#list").sortable({}).disableSelection();
             });
 
-            $scope.shuffleArr = function (arr,fixedPoint) {
+            $scope.shuffleArr = function (arr, fixedPoint) {
                 for (var i = arr.length - 1; i > 0; i--) {
                     var j = Math.floor(Math.random() * (i + 1));
                     if (i !== fixedPoint && j !== fixedPoint) {
