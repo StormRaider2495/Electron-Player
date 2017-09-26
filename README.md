@@ -20,7 +20,7 @@ its package manager (npm) installed.  You can get them from [http://nodejs.org/]
 Clone the angular-seed repository using:
 
 ```
-git clone https://github.com/routrahul/ElectronSamples.git
+git clone https://github.com/StormRaider2495/Electron-Player.git
 cd Player
 ```
 
