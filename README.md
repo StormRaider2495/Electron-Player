@@ -21,7 +21,7 @@ Clone the angular-seed repository using:
 
 ```
 git clone https://github.com/StormRaider2495/Electron-Player.git
-cd Player
+cd Electron-Player
 ```
 
 You will have to install npm dependencies:
