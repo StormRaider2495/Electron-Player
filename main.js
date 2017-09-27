@@ -30,38 +30,39 @@ app.on('ready', function() {
         {
             label: 'Sound Control',
             submenu: [{
-                    label: 'Select Folder',
-                    accelerator: 'CommandOrControl+O',
-                    click: function() {
-                        openFolderDialog();
-                    }
-                },
-                {
-                    label: 'Song Control',
-                    submenu: [{
-                            label: 'Pause',
-                            accelerator: 'CommandOrControl+E',
-                            click: function() {
-                                sendPauseSongMessage();
-                            }
-                        },
-                        {
-                            label: 'Next',
-                            accelerator: 'CommandOrControl+N',
-                            click: function() {
-                                sendNextSongMessage();
-                            }
-                        },
-                        {
-                            label: 'Previous',
-                            accelerator: 'CommandOrControl+P',
-                            click: function() {
-                                sendNextSongMessage();
-                            }
-                        }
-                    ]
+                label: 'Select Folder',
+                accelerator: 'CommandOrControl+O',
+                click: function() {
+                    openFolderDialog();
                 }
-            ]
+            }, {
+                label: 'Select File(s)',
+                accelerator: 'CommandOrControl+F',
+                click: function() {
+                    openFileDialog();
+                }
+            }, {
+                label: 'Song Control',
+                submenu: [{
+                    label: 'Pause',
+                    accelerator: 'CommandOrControl+E',
+                    click: function() {
+                        sendPauseSongMessage();
+                    }
+                }, {
+                    label: 'Next',
+                    accelerator: 'CommandOrControl+N',
+                    click: function() {
+                        sendNextSongMessage();
+                    }
+                }, {
+                    label: 'Previous',
+                    accelerator: 'CommandOrControl+P',
+                    click: function() {
+                        sendNextSongMessage();
+                    }
+                }]
+            }]
         }
     ];
 
@@ -98,7 +99,31 @@ function openFolderDialog() {
                         arr.push(files[i]);
                     }
                 }
-                console.log(arr);
+                var objToSend = {};
+                objToSend.path = filePath[0];
+                objToSend.files = arr;
+                mainWindow.webContents.send('modal-folder-content', objToSend);
+            });
+        }
+    });
+}
+
+function openFileDialog() {
+    var dialog = electron.dialog;
+    dialog.showOpenDialog({
+        filters: [{
+            name: '.mp3',
+            extensions: ['mp3']
+        }]
+    }, function(filePath) {
+        if (filePath) {
+            fs.readdir(filePath[0], function(err, files) {
+                var arr = [];
+                for (var i = 0; i < files.length; i++) {
+                    if (files[i].substr(-4) === ".mp3") {
+                        arr.push(files[i]);
+                    }
+                }
                 var objToSend = {};
                 objToSend.path = filePath[0];
                 objToSend.files = arr;
