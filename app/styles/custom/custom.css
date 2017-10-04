@@ -28,6 +28,13 @@ body {
     -webkit-user-select: none;
     user-select: none;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    /* Make electron app draggable across desktop*/
+    -ms-overflow-style: scrollbar;
+    -webkit-app-region: drag;
+}
+
+input[type="submit"], input[type="reset"], input[type="button"], input[type="text"], button, textarea, ul, li, div, span {
+    -webkit-app-region: no-drag;
 }
 
 
@@ -36,7 +43,8 @@ body {
 #title {
     position: absolute;
     width: 100%;
-    top: 3%;
+    top: 5%;
+    left: 0%;
     line-height: 34px;
     height: 34px;
     text-align: center;
@@ -472,15 +480,9 @@ body {
     position: absolute;
     top: 10%;
     right: 10%;
+    transition: transform 1.3s;
 }
 
-olute;
-top: 10%;
-right: 10%;
-
-}
-olute;
-top: 10%;
-right: 10%;
-
+.shuffleOn {
+    transform: rotateX(180deg);
 }

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('Player.first', ['ngRoute'])
-    .config(['$routeProvider', function ($routeProvider) {
+    .config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/first', {
                 templateUrl: './views/firstView/firstView.html',
@@ -11,7 +11,7 @@ angular.module('Player.first', ['ngRoute'])
 
 
     .controller('FirstViewCtrl', ['$scope', '$location',
-        function ($scope, $location) {
+        function($scope, $location) {
 
             $scope.sound = null;
             $scope.songPlaying = false;
@@ -22,10 +22,12 @@ angular.module('Player.first', ['ngRoute'])
             $scope.songsList = [];
             $scope.volume;
             $scope.playList;
+            $scope.shuffle = false;
+            var songsArrayForPlaying = [];
 
             const ipc = require('electron').ipcRenderer;
 
-            $scope.showPlaylist = function () {
+            $scope.showPlaylist = function() {
                 if ($scope.playListVisible) {
                     $scope.playListVisible = false;
                 } else {
@@ -33,25 +35,25 @@ angular.module('Player.first', ['ngRoute'])
                 }
             }
 
-            $scope.seekToTime = function ($event) {
+            $scope.seekToTime = function($event) {
                 $scope.player.seek($event.clientX / window.innerWidth);
             }
 
-            $scope.playPlaylistSong = function (index) {
+            $scope.playPlaylistSong = function(index) {
                 $scope.player.skipTo(index);
             }
 
-            $scope.nextSound = function () {
+            $scope.nextSound = function() {
                 $scope.player.skip('next');
                 $scope.songPlaying = true;
             }
-            
-            $scope.prevSound = function () {
+
+            $scope.prevSound = function() {
                 $scope.player.skip('prev');
                 $scope.songPlaying = true;
             }
 
-            $scope.playPause = function () {
+            $scope.playPause = function() {
                 if ($scope.player) {
                     if ($scope.songPlaying) {
                         $scope.songPlaying = false;
@@ -65,21 +67,22 @@ angular.module('Player.first', ['ngRoute'])
                 }
             }
 
-            $scope.showVolume = function () {
+            $scope.showVolume = function() {
                 $scope.player.toggleVolume();
             }
 
-            $scope.setVolume = function (event) {
+            $scope.setVolume = function(event) {
                 var per = event.screenX / parseFloat(barEmpty.scrollWidth);
                 $scope.player.volume(per);
                 $scope.volume = per;
             }
 
-            $scope.setLoop = function () {
+            $scope.setLoop = function() {
                 $scope.loop = !$scope.loop;
             }
 
-            $scope.playlistShuffle = function () {
+            $scope.playlistShuffle = function() {
+                $scope.shuffle = !$scope.shuffle;
                 $scope.player.shuffle();
             }
 
@@ -88,20 +91,20 @@ angular.module('Player.first', ['ngRoute'])
             var sliderBtn = document.getElementById("sliderBtn");
             var volume = document.getElementById("volume");
 
-            sliderBtn.addEventListener('mousedown', function () {
+            sliderBtn.addEventListener('mousedown', function() {
                 window.sliderDown = true;
             });
-            sliderBtn.addEventListener('touchstart', function () {
+            sliderBtn.addEventListener('touchstart', function() {
                 window.sliderDown = true;
             });
-            volume.addEventListener('mouseup', function () {
+            volume.addEventListener('mouseup', function() {
                 window.sliderDown = false;
             });
-            volume.addEventListener('touchend', function () {
+            volume.addEventListener('touchend', function() {
                 window.sliderDown = false;
             });
 
-            var move = function (event) {
+            var move = function(event) {
                 if (window.sliderDown) {
                     var x = event.clientX || event.touches[0].clientX;
                     var startX = window.innerWidth * 0.05;
@@ -115,7 +118,7 @@ angular.module('Player.first', ['ngRoute'])
             volume.addEventListener('touchmove', move);
 
             /* Initialize Player */
-            var Player = function (playlist) {
+            var Player = function(playlist) {
                 this.playlist = playlist;
                 this.index = 0;
             };
@@ -127,7 +130,7 @@ angular.module('Player.first', ['ngRoute'])
                  * Play a song in the playlist.
                  * @param  {Number} index Index of the song in the playlist (leave empty to play the first or current).
                  */
-                play: function (index) {
+                play: function(index) {
                     var self = this;
                     var sound;
 
@@ -144,14 +147,14 @@ angular.module('Player.first', ['ngRoute'])
                             html5: true,
                             loop: true,
                             volume: $scope.volume,
-                            onplay: function () {
+                            onplay: function() {
                                 // Display the duration.
                                 // duration.innerHTML = self.formatTime(Math.round(sound.duration()));
                                 $scope.timer = self.formatTime(Math.round(sound.duration()));
                                 requestAnimationFrame(self.step.bind(self));
                                 $scope.$apply();
                             },
-                            onend: function () {
+                            onend: function() {
                                 // Stop the wave animation.
                                 if (!$scope.loop) {
                                     self.skip('right');
@@ -161,7 +164,12 @@ angular.module('Player.first', ['ngRoute'])
                     }
 
                     // Begin playing the sound.
+                    try {
                     sound.play();
+                    } catch (e) {
+                      // console.log(e);
+                    }
+
 
 
                     // Keep track of the index we are currently playing.
@@ -171,7 +179,7 @@ angular.module('Player.first', ['ngRoute'])
                 /**
                  * Pause the currently playing track.
                  */
-                pause: function () {
+                pause: function() {
 
                     // $scope.songPlaying = !$scope.songPlaying;
 
@@ -188,7 +196,7 @@ angular.module('Player.first', ['ngRoute'])
                  * Skip to the next or previous track.
                  * @param  {String} direction 'next' or 'prev'.
                  */
-                skip: function (direction) {
+                skip: function(direction) {
                     var self = this;
 
                     // Get the next track based on the direction of the track.
@@ -211,7 +219,7 @@ angular.module('Player.first', ['ngRoute'])
                  * Skip to a specific track based on its playlist index.
                  * @param  {Number} index Index in the playlist.
                  */
-                skipTo: function (index) {
+                skipTo: function(index) {
                     var self = this;
 
                     // Stop the current track.
@@ -226,7 +234,7 @@ angular.module('Player.first', ['ngRoute'])
                 /**
                  * The step called within requestAnimationFrame to update the playback position.
                  */
-                step: function () {
+                step: function() {
                     var self = this;
 
                     // Get the Howl we want to manipulate.
@@ -243,7 +251,7 @@ angular.module('Player.first', ['ngRoute'])
                     }
                 },
 
-                formatTime: function (secs) {
+                formatTime: function(secs) {
                     var minutes = Math.floor(secs / 60) || 0;
                     var seconds = (secs - minutes * 60) || 0;
                     return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
@@ -253,7 +261,7 @@ angular.module('Player.first', ['ngRoute'])
                  * Seek to a new position in the currently playing track.
                  * @param  {Number} per Percentage through the song to skip.
                  */
-                seek: function (time) {
+                seek: function(time) {
                     var self = this;
 
                     // Get the Howl we want to manipulate.
@@ -267,11 +275,11 @@ angular.module('Player.first', ['ngRoute'])
                 /**
                  * Toggle the volume display on/off.
                  */
-                toggleVolume: function () {
+                toggleVolume: function() {
                     var self = this;
                     var display = (volume.style.display === 'block') ? 'none' : 'block';
 
-                    setTimeout(function () {
+                    setTimeout(function() {
                         volume.style.display = display;
                     }, (display === 'block') ? 0 : 500);
                     volume.className = (display === 'block') ? 'fadein' : 'fadeout';
@@ -281,7 +289,7 @@ angular.module('Player.first', ['ngRoute'])
                  * Set the volume and update the volume slider display.
                  * @param  {Number} val Volume between 0 and 1.
                  */
-                volume: function (val) {
+                volume: function(val) {
                     var self = this;
 
                     // Get the Howl we want to manipulate.
@@ -296,62 +304,72 @@ angular.module('Player.first', ['ngRoute'])
                     sliderBtn.style.left = (window.innerWidth * barWidth + window.innerWidth * 0.05 - 25) + 'px';
                 },
 
-                playLoop: function () {
+                playLoop: function() {
                     var self = this;
                     var sound = self.playlist[self.index].howl;
                     sound.loop(true);
                 },
 
-                shuffle: function () {
+                shuffle: function() {
                     var self = this;
                     var playlist = $scope.shuffleArr(self.playlist, self.index);
-                    console.log(playlist);
+                    // console.log(playlist);
                     self.playlist = playlist;
                 }
             }
 
-            ipc.on('modal-next-song', function (event, arg) {
+            ipc.on('modal-next-song', function(event, arg) {
                 $scope.nextSound();
             });
 
-            ipc.on('modal-prev-song', function (event, arg) {
+            ipc.on('modal-prev-song', function(event, arg) {
                 $scope.prevSound();
             });
 
-            ipc.on('modal-pause-song', function (event, arg) {
+            ipc.on('modal-pause-song', function(event, arg) {
                 $scope.playPause();
             });
 
-            ipc.on('modal-folder-content', function (event, arg) {
+            ipc.on('modal-folder-content', function(event, arg) {
                 var message = `Asynchronous message reply: ${arg}`;
-                console.log(arg.path);
+                // console.log(arg.path);
                 $scope.songsList = arg.files;
                 $scope.$apply();
-                var songsArrayForPlaying = [];
                 for (var i = 0; i < $scope.songsList.length; i++) {
-                    songsArrayForPlaying.push({
-                        title: arg.path + '/' + $scope.songsList[i],
-                        file: arg.path + '/' + $scope.songsList[i],
-                        howl: null,
-                        name: $scope.songsList[i]
-                    });
+                    if ($scope.songsList[i] === " ") {
+                        songsArrayForPlaying.push({
+                            title: arg.path[0],
+                            file: arg.path[0],
+                            howl: null,
+                            name: arg.path[0]
+                        });
+                    } else {
+                        songsArrayForPlaying.push({
+                            title: arg.path + '/' + $scope.songsList[i],
+                            file: arg.path + '/' + $scope.songsList[i],
+                            howl: null,
+                            name: $scope.songsList[i]
+                        });
+                    }
                 }
                 $scope.player = new Player(songsArrayForPlaying);
-                $scope.wave = new SiriWave({
-                    container: waveform,
-                    width: window.innerWidth,
-                    height: window.innerHeight * 0.3,
-                    cover: true,
-                    speed: 0.03,
-                    amplitude: 0.7,
-                    frequency: 2
-                });
+                if (!$scope.wave) {
+                    $scope.wave = new SiriWave({
+                        container: waveform,
+                        width: window.innerWidth,
+                        height: window.innerHeight * 0.3,
+                        cover: true,
+                        speed: 0.03,
+                        amplitude: 0.7,
+                        frequency: 2
+                    });
+                }
                 $scope.wave.start();
                 $scope.$apply();
                 // $("#list").sortable({}).disableSelection();
             });
 
-            $scope.shuffleArr = function (arr, fixedPoint) {
+            $scope.shuffleArr = function(arr, fixedPoint) {
                 for (var i = arr.length - 1; i > 0; i--) {
                     var j = Math.floor(Math.random() * (i + 1));
                     if (i !== fixedPoint && j !== fixedPoint) {

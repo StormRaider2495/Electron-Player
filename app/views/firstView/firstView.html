@@ -18,7 +18,7 @@
     <li class="btn" id="playLoopBtn" ng-click="playLoop()" aria-label="Loop Play"></li>
     <li class="btn" id="volumeBtn" ng-click="showVolume()"></li>
     <li class="btn" id="loop" ng-click="setLoop()" aria-label="Toggle Repeat" ng-class="{true:'repeat', false:'no-repeat'}[loop]"></li>
-    <li class="btn" id="shuffle" ng-click="playlistShuffle()" aria-label="Shuffle playlist" class="shuffleOn"></li>
+    <li class="btn" id="shuffle" ng-click="playlistShuffle()" aria-label="Shuffle playlist" ng-class="{'shuffleOn': shuffle}"></li>
 </ul>
 
 <!-- Progress -->
@@ -30,7 +30,7 @@
 <!-- Playlist -->
 <div id="playlist" ng-show="playListVisible">
     <div id="list">
-        <div class="list-song" ng-repeat="song in player.playlist" ng-click="playPlaylistSong($index)">{{song.name}}</div>
+        <div class="list-song" index="{{$index}}" ng-repeat="song in player.playlist" ng-click="playPlaylistSong($index)">{{song.name}}</div>
     </div>
 </div>
 
