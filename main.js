@@ -12,7 +12,7 @@ require('electron-reload')(__dirname);
 app.on('ready', function() {
     mainWindow = new BrowserWindow({
         transparent: true,
-        frame: false,
+        // frame: false,
         width: 612,
         height: 384,
         maxWidth: 800,
@@ -34,7 +34,7 @@ app.on('ready', function() {
     });
 
     mainWindow.on('closed', function() {
-        mainWindow = null
+        mainWindow = null;
     });
 
     var template = [{},

@@ -166,6 +166,7 @@ angular.module('Player.first', ['ngRoute'])
                     // Begin playing the sound.
                     try {
                     sound.play();
+                    $scope.songPlaying = true;
                     } catch (e) {
                       // console.log(e);
                     }
