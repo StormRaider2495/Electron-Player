@@ -1,23 +1,23 @@
 {
-  "name": "MusicPlayer",
-  "productName": "Electron Music Player",
-  "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
-  "scripts": {
-    "start": "electron .",
-    "build": "electron-packager . MusicPlayer --platform=darwin --arch=x64 --version=0.30.4",
-    "package": "asar pack MusicPlayer.app/Contents/Resources/app MusicPlayer.app/Contents/Resources/app.asar",
-    "package-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=ico/music_logo_01.png --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Electron Music Player\""
-  },
-  "author": "stormraider2495",
-  "license": "MIT",
-  "devDependencies": {
-    "electron": "^1.7.8",
-    "electron-packager": "^5.2.1",
-    "electron-prebuilt": "^1.1.0"    
-  },
-  "dependencies": {
-    "electron-reload": "^1.2.2"
-  }
+    "name": "MusicPlayer",
+    "productName": "Electron Music Player",
+    "version": "1.0.1",
+    "description": "",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "build": "electron-packager . MusicPlayer --platform=darwin --arch=x64 --version=0.30.4",
+        "package": "asar pack MusicPlayer.app/Contents/Resources/app MusicPlayer.app/Contents/Resources/app.asar",
+        "package-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=ico/music_logo_01.png --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Electron Music Player\""
+    },
+    "author": "stormraider2495",
+    "license": "MIT",
+    "devDependencies": {
+        "electron": "^1.7.8",
+        "electron-packager": "^5.2.1",
+        "electron-prebuilt": "^1.1.0"
+    },
+    "dependencies": {
+        "electron-reload": "^1.2.2"
+    }
 }

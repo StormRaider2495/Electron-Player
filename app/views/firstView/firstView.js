@@ -20,7 +20,7 @@ angular.module('Player.first', ['ngRoute'])
             $scope.trackName = "";
             $scope.loop = false;
             $scope.songsList = [];
-            $scope.volume;
+            $scope.volume = 0.8;
             $scope.playList;
             $scope.shuffle = false;
             var songsArrayForPlaying = [];
@@ -73,8 +73,8 @@ angular.module('Player.first', ['ngRoute'])
 
             $scope.setVolume = function(event) {
                 var per = event.screenX / parseFloat(barEmpty.scrollWidth);
-                $scope.player.volume(per);
                 $scope.volume = per;
+                $scope.player.volume(per);
             }
 
             $scope.setLoop = function() {
@@ -110,6 +110,7 @@ angular.module('Player.first', ['ngRoute'])
                     var startX = window.innerWidth * 0.05;
                     var layerX = x - startX;
                     var per = Math.min(1, Math.max(0, layerX / parseFloat(barEmpty.scrollWidth)));
+                    $scope.volume = per;
                     $scope.player.volume(per);
                 }
             };
@@ -339,10 +340,10 @@ angular.module('Player.first', ['ngRoute'])
                 for (var i = 0; i < $scope.songsList.length; i++) {
                     if ($scope.songsList[i] === " ") {
                         songsArrayForPlaying.push({
-                            title: arg.path[0],
-                            file: arg.path[0],
+                            title: arg.path[i],
+                            file: arg.path[i],
                             howl: null,
-                            name: arg.path[0]
+                            name: arg.path[i].substring(arg.path[i].lastIndexOf("\\")+1,arg.path[i].length)
                         });
                     } else {
                         songsArrayForPlaying.push({
@@ -361,7 +362,7 @@ angular.module('Player.first', ['ngRoute'])
                         height: window.innerHeight * 0.3,
                         cover: true,
                         speed: 0.03,
-                        amplitude: 0.7,
+                        amplitude: 0.9,
                         frequency: 2
                     });
                 }

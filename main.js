@@ -125,22 +125,22 @@ function openFileDialog() {
         filters: [{
             name: '.mp3',
             extensions: ['mp3']
-        }]
+        }],
+        properties: ['openFile', 'multiSelections'],
     }, function(fileNames) {
         if (fileNames === undefined) {
             alert("No file selected");
         } else {
-            // console.log("in else " + fileNames);
             fs.readdir(fileNames[0], function(err, files) {
                 var fileNameArr = [],
                     filePathArr = [];
-                filePathArr.push(fileNames[0]);
-                fileNameArr.push(" ");
+                for (var i = 0; i < fileNames.length; i++) {
+                    filePathArr.push(fileNames[i]);
+                    fileNameArr.push(" ");
+                }
                 var objToSend = {};
                 objToSend.path = filePathArr;
                 objToSend.files = fileNameArr;
-                // console.log(objToSend.path);
-                // console.log(objToSend.files);
                 mainWindow.webContents.send('modal-folder-content', objToSend);
             });
         }

@@ -179,7 +179,8 @@ input[type="submit"], input[type="reset"], input[type="button"], input[type="tex
     height: 30%;
     position: absolute;
     left: 0;
-    top: 50%;
+    /*top: 50%;*/
+    top: 62%;
     margin: -15% auto;
     /*display: none;*/
     cursor: pointer;
