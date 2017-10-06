@@ -2,13 +2,15 @@
     "name": "MusicPlayer",
     "productName": "Electron Music Player",
     "version": "1.0.1",
-    "description": "",
+    "description": "A music player to play yours songs",
     "main": "main.js",
     "scripts": {
         "start": "electron .",
         "build": "electron-packager . MusicPlayer --platform=darwin --arch=x64 --version=0.30.4",
         "package": "asar pack MusicPlayer.app/Contents/Resources/app MusicPlayer.app/Contents/Resources/app.asar",
-        "package-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=ico/music_logo_01.png --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Electron Music Player\""
+        "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=--icon=ico/music_logo_01.icns --prune=true --out=release-builds",
+        "package-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=ico/music_logo_01.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Electron Music Player\"",
+        "package-linux": "electron-packager . --overwrite --platform=linux --arch=x64 --icon=ico/music_logo_01.png --prune=true --out=release-builds"
     },
     "author": "stormraider2495",
     "license": "MIT",
